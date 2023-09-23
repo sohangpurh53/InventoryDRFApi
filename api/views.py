@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
 # Create your views here.
 
 
@@ -44,6 +45,7 @@ class ProductCreateView(generics.CreateAPIView):
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    
 
 class ProductUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = ProductSerializer
@@ -87,4 +89,8 @@ class OrderItemListView(generics.ListAPIView):
 
 class CreateOrderItemView(generics.CreateAPIView):
     serializer_class = createOrderItemSerializer
+
+
+
+
 

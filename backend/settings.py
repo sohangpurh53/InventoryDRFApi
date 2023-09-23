@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(z-#v!uwc!&16!%q&qu(_ir$vgkga$8y+4w4xo!r+r+d+wn4-_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'corsheaders',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -120,9 +121,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_ROOT = 'media/'
-MEDIA_URL = os.path.join('media/')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Path to your static files directory
+
+# Media files (user-uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -132,7 +136,6 @@ TIME_ZONE = 'Asia/Kolkata'
 
 CORS_ALLOWED_ORIGINS=[
     "http://localhost:3000",
-    'http://localhost:8000'
 ]
 
 REST_FRAMEWORK = {
