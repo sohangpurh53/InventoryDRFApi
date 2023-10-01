@@ -7,6 +7,10 @@ from api.serializers import (SupplierSerializer, CustomerSerializer,
                                PurchaseSerializer, listPurchaseSerializer,
                                listStockSerializer, listOrderSerializer,
                                  listOrderItemSerializer, createOrderItemSerializer, updatePurchaseSerializer)
+from rest_framework.permissions  import IsAdminUser
+
+
+
 # Create your views here.
 #dashboard view separately
 class CustomProductPageNumberPagination(PageNumberPagination):
@@ -22,6 +26,7 @@ class CustomPageNumberPagination(PageNumberPagination):
 class ProductDisplayView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAdminUser]
     pagination_class = CustomProductPageNumberPagination
 
 

@@ -107,3 +107,8 @@ class updatePurchaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Purchase
         fields = ['id','supplier', 'product', 'quantity']
+
+
+class SignInSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)

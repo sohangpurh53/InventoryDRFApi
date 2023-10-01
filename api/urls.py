@@ -4,7 +4,8 @@ from api.views import (SupplierCreateView, CustomerCreateView,
 CustomerView, CustomerDeleteView, ProductCreateView,
 PurchaseCreateView, CategoryCreateView,ProductListView,
 SupplierListView, CategoryListView,PurchaseListView,
-StockListView, OrderListView, OrderItemListView, CreateOrderItemView, ProductUpdateView, PurchaseUpdateView)
+StockListView, OrderListView, OrderItemListView, 
+CreateOrderItemView, ProductUpdateView, PurchaseUpdateView)
 
 
 urlpatterns = [
@@ -25,4 +26,7 @@ urlpatterns = [
     path('order-item/', OrderItemListView.as_view(), name='order-item-list'),
     path('order-item/create/', CreateOrderItemView.as_view(), name='order-item-create'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product-update'),
+
+    
+ 
 ]

@@ -5,7 +5,8 @@ from api.serializers import (SupplierSerializer, CustomerSerializer,
                              ProductSerializer, CategorySerializer,
                                PurchaseSerializer, listPurchaseSerializer,
                                listStockSerializer, listOrderSerializer,
-                                 listOrderItemSerializer, createOrderItemSerializer, updatePurchaseSerializer)
+                                 listOrderItemSerializer, createOrderItemSerializer, 
+                                 updatePurchaseSerializer, SignInSerializer)
 from rest_framework import viewsets
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -13,6 +14,16 @@ from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
+from rest_framework.authentication import authenticate
+from django.contrib.auth import login
+from rest_framework.decorators import api_view
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from rest_framework_simplejwt.tokens import TokenError
+
+
 # Create your views here.
 
 
@@ -92,5 +103,13 @@ class CreateOrderItemView(generics.CreateAPIView):
 
 
 
-
-
+class BlacklistRefreshTokenView(APIView):
+    def post(self, request):
+        refresh_token = request.data.get('refresh_token')
+        if not refresh_token:
+            return Response({'error': 'refresh_token required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            RefreshToken(refresh_token).blacklist()
+            return Response({'message': 'refresh token blacklisted successfully'}, status=status.HTTP_200_OK)
+        except TokenError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
