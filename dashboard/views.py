@@ -49,19 +49,24 @@ class PurchaseDispalyView(ListAPIView):
     queryset = Purchase.objects.all()
     serializer_class = listPurchaseSerializer
     pagination_class = CustomPageNumberPagination
+    permission_classes = [IsAdminUser]
 
 
 class StockDispalyView(ListAPIView):
     queryset = Stock.objects.all()
     serializer_class = listStockSerializer
+    # permission_classes = [IsAdminUser]
+    pagination_class = CustomPageNumberPagination
 
 class OrderDispalyView(ListAPIView):
     queryset = Order.objects.all()
     serializer_class = listOrderSerializer
+    permission_classes = [IsAdminUser]
 
 
 class OrderItemDispalyView(ListAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = listOrderItemSerializer
     pagination_class = CustomPageNumberPagination
+    permission_classes = [IsAdminUser]
 
