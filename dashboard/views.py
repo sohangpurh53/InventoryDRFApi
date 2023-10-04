@@ -6,7 +6,8 @@ from api.serializers import (SupplierSerializer, CustomerSerializer,
                              ProductSerializer, CategorySerializer,
                                PurchaseSerializer, listPurchaseSerializer,
                                listStockSerializer, listOrderSerializer,
-                                 listOrderItemSerializer, createOrderItemSerializer, updatePurchaseSerializer)
+                                 listOrderItemSerializer, createOrderItemSerializer,
+                                   updatePurchaseSerializer)
 from rest_framework.permissions  import IsAdminUser
 
 
@@ -34,6 +35,8 @@ class ProductDisplayView(ListAPIView):
 class SupplierDispalyView(ListAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    permission_classes = [IsAdminUser]
+
 
 
 class CustomerView(ListAPIView):
@@ -70,3 +73,8 @@ class OrderItemDispalyView(ListAPIView):
     pagination_class = CustomPageNumberPagination
     permission_classes = [IsAdminUser]
 
+
+
+#table view for all stocks including purchase and order
+
+   

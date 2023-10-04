@@ -29,7 +29,7 @@ from rest_framework_simplejwt.tokens import TokenError
 
 class SupplierCreateView(generics.CreateAPIView):
     serializer_class = SupplierSerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
 
 class SupplierListView(generics.ListAPIView):
     queryset = Supplier.objects.all()
@@ -83,6 +83,7 @@ class PurchaseListView(generics.ListAPIView):
 class PurchaseUpdateView(generics.RetrieveUpdateAPIView):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
+    permission_classes = [IsAdminUser]
 
 
 class StockListView(generics.ListAPIView):
