@@ -26,17 +26,18 @@ from rest_framework_simplejwt.tokens import TokenError
 
 # Create your views here.
 
-
+#supplier create update and delete
 class SupplierCreateView(generics.CreateAPIView):
     serializer_class = SupplierSerializer
-    # permission_classes = [IsAdminUser]
+    
 
 class SupplierListView(generics.ListAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    
 
    
-
+#cstomer create update and delete
 class CustomerCreateView(generics.CreateAPIView):
     serializer_class = CustomerSerializer
     permission_classes = [IsAdminUser]
@@ -49,6 +50,9 @@ class CustomerDeleteView(generics.DestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
+
+
+#product create update and delete
 class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
@@ -61,17 +65,24 @@ class ProductListView(generics.ListAPIView):
 class ProductUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
+    permission_classes = [IsAdminUser]
     
 
+
+#category create update and delete
 class CategoryCreateView(generics.CreateAPIView):
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUser]
+    
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser]
     
 
+
+#purchase create update and delete
 class PurchaseCreateView(generics.CreateAPIView):
     serializer_class = PurchaseSerializer
     permission_classes = [IsAdminUser]
@@ -86,10 +97,15 @@ class PurchaseUpdateView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAdminUser]
 
 
+
+#stock create update and delete
 class StockListView(generics.ListAPIView):
     queryset = Stock.objects.all()
     serializer_class = listStockSerializer
 
+
+
+#orders create update and delete
 class OrderListView(generics.ListAPIView):
     queryset = Order.objects.all()
     serializer_class = listOrderSerializer
