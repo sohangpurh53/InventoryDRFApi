@@ -62,10 +62,7 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
 
-class ProductUpdateView(generics.RetrieveUpdateAPIView):
-    serializer_class = ProductSerializer
-    queryset = Product.objects.all()
-    permission_classes = [IsAdminUser]
+
     
 
 
@@ -91,10 +88,7 @@ class PurchaseListView(generics.ListAPIView):
     queryset = Purchase.objects.all()
     serializer_class = listPurchaseSerializer
 
-class PurchaseUpdateView(generics.RetrieveUpdateAPIView):
-    queryset = Purchase.objects.all()
-    serializer_class = PurchaseSerializer
-    permission_classes = [IsAdminUser]
+
 
 
 

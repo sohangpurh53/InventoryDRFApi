@@ -5,7 +5,7 @@ CustomerView, CustomerDeleteView, ProductCreateView,
 PurchaseCreateView, CategoryCreateView,ProductListView,
 SupplierListView, CategoryListView,PurchaseListView,
 StockListView, OrderListView, OrderItemListView, 
-CreateOrderItemView, ProductUpdateView, PurchaseUpdateView)
+CreateOrderItemView)
 
 
 urlpatterns = [
@@ -20,12 +20,12 @@ urlpatterns = [
     path('suppliers/', SupplierListView.as_view(), name='supplier-list'),
     path('categories/', CategoryListView.as_view(), name='category-list'),
     path('purchases/', PurchaseListView.as_view(), name='purchase-list'),
-    path('purchase/<int:pk>/update/', PurchaseUpdateView.as_view(), name='purchase-update'),
+    
     path('stocks/', StockListView.as_view(), name='stock-list'),
     path('orders/', OrderListView.as_view(), name='order-list'),
     path('order-item/', OrderItemListView.as_view(), name='order-item-list'),
     path('order-item/create/', CreateOrderItemView.as_view(), name='order-item-create'),
-    path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product-update'),
+  
 
     
  
