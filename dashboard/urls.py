@@ -3,7 +3,7 @@ from django.conf import settings
 from dashboard.views import (ProductDisplayView,  ProductUpdateView, ProductDeleteView,
                              PurchaseDispalyView, PurchaseUpdateView,PurchaseDeleteView,
                              OrderItemDispalyView, UpdateOrderItemView,
-                             StockDispalyView, 
+                             StockDispalyView, StockUpdateView,
                              CustomerView, CustomerDeleteView,CustomerUpdateView,
                              SupplierDispalyView,
                              CategoryDisplayView, CategoryUpdateView, CategoryDeleteView,
@@ -26,6 +26,7 @@ urlpatterns = [
     path('orderitem/<int:pk>/update/', UpdateOrderItemView.as_view(), name='orderitem-update'),
 
     path('stock/list/', StockDispalyView.as_view(), name='stock-list'),
+    path('stock/<int:pk>/update/', StockUpdateView.as_view(), name='stock-update'),
 
     path('category/list/', CategoryDisplayView.as_view(), name='category-list'), 
     path('category/<int:pk>/update/', CategoryUpdateView.as_view(), name='category-udpate'),

@@ -22,6 +22,7 @@ from django.contrib.auth import login
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from rest_framework_simplejwt.tokens import TokenError
+from rest_framework.permissions import IsAdminUser
 
 
 # Create your views here.
@@ -29,6 +30,7 @@ from rest_framework_simplejwt.tokens import TokenError
 #supplier create and list
 class SupplierCreateView(generics.CreateAPIView):
     serializer_class = SupplierSerializer
+    permission_classes = [IsAdminUser]
     
 
 class SupplierListView(generics.ListAPIView):

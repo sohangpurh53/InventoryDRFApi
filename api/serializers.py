@@ -13,19 +13,18 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)  # Set and hash the password
         user.save()
         return user
+    # def create(self, validated_data):
+    #     user_data = validated_data.pop('user')
+    #     user = UserSerializer().create(user_data)
+    #     supplier = Supplier.objects.create(user=user, **validated_data)
+    #     return supplier
 
 class SupplierSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
     class Meta:
         model = Supplier
-        fields = ['id', 'user', 'address', 'mobile_no']
+        fields = ['id', 'full_name','email', 'address', 'mobile_no']
 
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = UserSerializer().create(user_data)
-        supplier = Supplier.objects.create(user=user, **validated_data)
-        return supplier
+    
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,7 +56,7 @@ class listPurchaseSerializer(serializers.ModelSerializer):
         fields = ['id','supplier', 'product', 'quantity']
 
 class listStockSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
+    product = ProductSerializer(read_only=True)
     class Meta:
         model = Stock
         fields = ['product', 'quantity', ]
@@ -84,7 +83,7 @@ class OrderSerializer(serializers.ModelSerializer):
       
 
 class createOrderItemSerializer(serializers.ModelSerializer):
-    order = OrderSerializer()
+    order = OrderSerializer(read_only=True)
     class Meta:
         model = OrderItem
         fields = ['order', 'product', 'quantity', 'price']

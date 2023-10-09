@@ -6,12 +6,13 @@ from django.contrib.auth.models import User
 
 
 class Supplier(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=False)
+    full_name = models.CharField(max_length=255, blank=True)
+    email = models.EmailField()
     address = models.TextField()
     mobile_no = models.IntegerField()
 
     def __str__(self):
-        return self.user.username
+        return self.full_name
 
 
 class Customer(models.Model):
@@ -70,10 +71,7 @@ class OrderItem(models.Model):
         stock, created = Stock.objects.get_or_create(product=self.product)
         stock.decrease_quantity(self.quantity)
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        stock, created = Stock.objects.get_or_create(product=self.product)
-        stock.decrease_quantity(self.quantity)
+
 
 class Purchase(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)

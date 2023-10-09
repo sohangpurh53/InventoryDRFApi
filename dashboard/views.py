@@ -96,8 +96,14 @@ class PurchaseDeleteView(RetrieveDestroyAPIView):
 class StockDispalyView(ListAPIView):
     queryset = Stock.objects.all()
     serializer_class = listStockSerializer
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     pagination_class = CustomPageNumberPagination
+
+class StockUpdateView(RetrieveUpdateAPIView):
+    queryset = Stock.objects.all()
+    serializer_class = listStockSerializer
+    # permission_classes = [IsAdminUser]
+
 
 
 
@@ -120,7 +126,7 @@ class OrderItemDispalyView(ListAPIView):
 class UpdateOrderItemView(RetrieveUpdateAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = createOrderItemSerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
 
 
 
