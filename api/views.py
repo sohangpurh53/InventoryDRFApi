@@ -26,7 +26,7 @@ from rest_framework_simplejwt.tokens import TokenError
 
 # Create your views here.
 
-#supplier create update and delete
+#supplier create and list
 class SupplierCreateView(generics.CreateAPIView):
     serializer_class = SupplierSerializer
     
@@ -37,22 +37,15 @@ class SupplierListView(generics.ListAPIView):
     
 
    
-#cstomer create update and delete
+#cstomer create and list
 class CustomerCreateView(generics.CreateAPIView):
     serializer_class = CustomerSerializer
     permission_classes = [IsAdminUser]
 
-class CustomerView(generics.ListAPIView):
-    queryset = Customer.objects.all()
-    serializer_class = CustomerSerializer
-
-class CustomerDeleteView(generics.DestroyAPIView):
-    queryset = Customer.objects.all()
-    serializer_class = CustomerSerializer
 
 
 
-#product create update and delete
+#product create and list
 class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
@@ -62,11 +55,7 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
 
-
-    
-
-
-#category create update and delete
+#category create and list
 class CategoryCreateView(generics.CreateAPIView):
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUser]
@@ -79,10 +68,12 @@ class CategoryListView(generics.ListAPIView):
     
 
 
-#purchase create update and delete
+#purchase create and list
 class PurchaseCreateView(generics.CreateAPIView):
     serializer_class = PurchaseSerializer
     permission_classes = [IsAdminUser]
+
+    
 
 class PurchaseListView(generics.ListAPIView):
     queryset = Purchase.objects.all()
@@ -92,14 +83,14 @@ class PurchaseListView(generics.ListAPIView):
 
 
 
-#stock create update and delete
+#stock create and list
 class StockListView(generics.ListAPIView):
     queryset = Stock.objects.all()
     serializer_class = listStockSerializer
 
 
 
-#orders create update and delete
+#orders create and list
 class OrderListView(generics.ListAPIView):
     queryset = Order.objects.all()
     serializer_class = listOrderSerializer

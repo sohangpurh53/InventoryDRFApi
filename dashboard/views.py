@@ -28,7 +28,7 @@ class CustomPageNumberPagination(PageNumberPagination):
     max_page_size = 100
 
 class CustomCategoryPageNumberPagination(PageNumberPagination):
-    page_size = 15
+    page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
 
@@ -64,6 +64,14 @@ class CustomerView(ListAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
+class CustomerDeleteView(RetrieveDestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+class CustomerUpdateView(RetrieveUpdateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
   
 
 #Purchase listing and CURD
@@ -88,7 +96,7 @@ class PurchaseDeleteView(RetrieveDestroyAPIView):
 class StockDispalyView(ListAPIView):
     queryset = Stock.objects.all()
     serializer_class = listStockSerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     pagination_class = CustomPageNumberPagination
 
 
@@ -107,11 +115,13 @@ class OrderItemDispalyView(ListAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = listOrderItemSerializer
     pagination_class = CustomPageNumberPagination
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
 
 class UpdateOrderItemView(RetrieveUpdateAPIView):
-    queryset = Stock.objects.all()
+    queryset = OrderItem.objects.all()
     serializer_class = createOrderItemSerializer
+    permission_classes = [IsAdminUser]
+
 
 
 #Customer listing and CURD
@@ -136,29 +146,30 @@ class CategoryDeleteView(RetrieveDestroyAPIView):
 
 #table view for all stocks including purchase and order
 class TableListView(ListAPIView):
-    queryset_order_item = OrderItem.objects.all()
-    queryset_purchase = Purchase.objects.all()
-    queryset_stock = Stock.objects.all()
-
     serializer_class_order_item = listOrderItemSerializer
     serializer_class_purchase = listPurchaseSerializer
     serializer_class_stock = listStockSerializer
 
-    permission_classes = [IsAdminUser]
+    def get_queryset(self):
+        order_item_data = OrderItem.objects.all()
+        purchase_data = Purchase.objects.all()
+        stock_data = Stock.objects.all()
 
+        return {
+            'order_item_data': order_item_data,
+            'purchase_data': purchase_data,
+            'stock_data': stock_data
+        }
 
     def get(self, request, *args, **kwargs):
-        order_item_data = self.queryset_order_item
-        purchase_data = self.queryset_purchase
-        stock_data = self.queryset_stock
+        data = self.get_queryset()
 
-        order_item_serializer = self.serializer_class_order_item(order_item_data, many=True)
-        purchase_serializer = self.serializer_class_purchase(purchase_data, many=True)
-        stock_serializer = self.serializer_class_stock(stock_data, many=True)
+        order_item_serializer = self.serializer_class_order_item(data['order_item_data'], many=True)
+        purchase_serializer = self.serializer_class_purchase(data['purchase_data'], many=True)
+        stock_serializer = self.serializer_class_stock(data['stock_data'], many=True)
 
         return Response({
             'order_item_data': order_item_serializer.data,
             'purchase_data': purchase_serializer.data,
             'stock_data': stock_serializer.data
         })
-    

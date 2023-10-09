@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 # models.py
 
@@ -57,7 +58,8 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE) 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE) 
+    product = models.ForeignKey(Product, on_delete=models.PROTECT) 
+    price = models.DecimalField(decimal_places=2, max_digits=100, default=0)
     quantity = models.IntegerField()
 
     def __str__(self):
@@ -68,9 +70,14 @@ class OrderItem(models.Model):
         stock, created = Stock.objects.get_or_create(product=self.product)
         stock.decrease_quantity(self.quantity)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        stock, created = Stock.objects.get_or_create(product=self.product)
+        stock.decrease_quantity(self.quantity)
+
 class Purchase(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE) 
+    product = models.ForeignKey(Product, on_delete=models.PROTECT) 
     quantity = models.IntegerField()
     purchase_date = models.DateTimeField(auto_now_add=True)
 
@@ -80,11 +87,20 @@ class Purchase(models.Model):
         stock.increase_quantity(self.quantity)
     def __str__(self):
         return self.product.name
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        stock = Stock.objects.get(product=self.product)
+        stock.decrease_quantity(self.quantity)
+    
+
+    def __str__(self):
+        return self.product.name
    
 class Stock(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=0)
-    price = models.DecimalField(decimal_places=2, max_digits=100, default=True)
+    
 
     def increase_quantity(self, amount):
         self.quantity += amount
@@ -98,3 +114,8 @@ class Stock(models.Model):
     
     def __str__(self):
         return self.product.name
+ 
+  
+    
+    
+    

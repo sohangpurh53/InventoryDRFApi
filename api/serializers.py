@@ -59,14 +59,14 @@ class listPurchaseSerializer(serializers.ModelSerializer):
 class listStockSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     class Meta:
-        model = Purchase
-        fields = ['product', 'quantity',]
+        model = Stock
+        fields = ['product', 'quantity', ]
 
 class listOrderSerializer(serializers.ModelSerializer):
     customer = CustomerSerializer()
     class Meta:
         model = Order
-        fields = ['customer', 'order_date', 'order_status']
+        fields = ['customer', 'order_date', 'order_status',]
 
 class listOrderItemSerializer(serializers.ModelSerializer):
     order = listOrderSerializer()
@@ -74,7 +74,7 @@ class listOrderItemSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField()
     class Meta:
         model = OrderItem
-        fields = ['order', 'product', 'quantity']
+        fields = ['id','order', 'product', 'quantity','price']
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
@@ -87,7 +87,7 @@ class createOrderItemSerializer(serializers.ModelSerializer):
     order = OrderSerializer()
     class Meta:
         model = OrderItem
-        fields = ['order', 'product', 'quantity']
+        fields = ['order', 'product', 'quantity', 'price']
 
     def create(self, validated_data):
         order_data = validated_data.pop('order')

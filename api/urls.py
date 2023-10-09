@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from api.views import (SupplierCreateView, CustomerCreateView, 
-CustomerView, CustomerDeleteView, ProductCreateView,
+ ProductCreateView,
 PurchaseCreateView, CategoryCreateView,ProductListView,
 SupplierListView, CategoryListView,PurchaseListView,
 StockListView, OrderListView, OrderItemListView, 
@@ -11,8 +11,7 @@ CreateOrderItemView)
 urlpatterns = [
     path('supplier/create/', SupplierCreateView.as_view(), name='supplier-create'),
     path('customer/create/', CustomerCreateView.as_view(), name='customer-create'),
-    path('customer/', CustomerView.as_view(), name='customer'),
-    path('customer/delete/<int:pk>/', CustomerDeleteView.as_view(), name='customer-delete'),
+    
     path('product/create/', ProductCreateView.as_view(), name='product-create'),
     path('category/create/', CategoryCreateView.as_view(), name='category-create'),
     path('purchase/create/', PurchaseCreateView.as_view(), name='purchase-create'),
