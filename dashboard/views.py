@@ -6,7 +6,7 @@ from api.serializers import (SupplierSerializer, CustomerSerializer,
                              ProductSerializer, CategorySerializer,
                                PurchaseSerializer, listPurchaseSerializer,
                                listStockSerializer, listOrderSerializer,
-                                 listOrderItemSerializer, createOrderItemSerializer,
+                                 listOrderItemSerializer, createOrderItemSerializer,updateOrderItemSerializer,
                                    updatePurchaseSerializer)
 from rest_framework.permissions  import IsAdminUser
 from rest_framework.response import Response
@@ -58,19 +58,27 @@ class SupplierDispalyView(ListAPIView):
     serializer_class = SupplierSerializer
     permission_classes = [IsAdminUser]
 
+class SupplierUpdateView(RetrieveUpdateAPIView):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer
+    permission_classes = [IsAdminUser]
+
 
 #Customer listing and CURD
 class CustomerView(ListAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    permission_classes = [IsAdminUser]
 
 class CustomerDeleteView(RetrieveDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    permission_classes = [IsAdminUser]
 
 class CustomerUpdateView(RetrieveUpdateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    permission_classes = [IsAdminUser]
 
   
 
@@ -102,7 +110,7 @@ class StockDispalyView(ListAPIView):
 class StockUpdateView(RetrieveUpdateAPIView):
     queryset = Stock.objects.all()
     serializer_class = listStockSerializer
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
 
 
 
@@ -116,17 +124,18 @@ class OrderDispalyView(ListAPIView):
     serializer_class = listOrderSerializer
     permission_classes = [IsAdminUser]
 
+
 #OrderItem listing and CURD
 class OrderItemDispalyView(ListAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = listOrderItemSerializer
     pagination_class = CustomPageNumberPagination
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
 
 class UpdateOrderItemView(RetrieveUpdateAPIView):
     queryset = OrderItem.objects.all()
-    serializer_class = createOrderItemSerializer
-    # permission_classes = [IsAdminUser]
+    serializer_class = updateOrderItemSerializer
+    permission_classes = [IsAdminUser]
 
 
 
@@ -155,6 +164,7 @@ class TableListView(ListAPIView):
     serializer_class_order_item = listOrderItemSerializer
     serializer_class_purchase = listPurchaseSerializer
     serializer_class_stock = listStockSerializer
+    permission_classes = [IsAdminUser]
 
     def get_queryset(self):
         order_item_data = OrderItem.objects.all()

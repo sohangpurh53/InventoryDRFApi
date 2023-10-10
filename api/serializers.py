@@ -59,7 +59,7 @@ class listStockSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
     class Meta:
         model = Stock
-        fields = ['product', 'quantity', ]
+        fields = ['id', 'product', 'quantity', ]
 
 class listOrderSerializer(serializers.ModelSerializer):
     customer = CustomerSerializer()
@@ -83,7 +83,7 @@ class OrderSerializer(serializers.ModelSerializer):
       
 
 class createOrderItemSerializer(serializers.ModelSerializer):
-    order = OrderSerializer(read_only=True)
+    order = OrderSerializer()
     class Meta:
         model = OrderItem
         fields = ['order', 'product', 'quantity', 'price']
@@ -114,5 +114,16 @@ class SignInSerializer(serializers.Serializer):
 
 
 
-#list all item in table for clear report
 
+
+class updateOrderItemSerializer(serializers.ModelSerializer):
+    order = OrderSerializer(read_only=True)
+    class Meta:
+        model = OrderItem
+        fields = ['order', 'product', 'quantity', 'price']
+
+    def create(self, validated_data):
+        order_data = validated_data.pop('order')
+        order, created = Order.objects.get_or_create(**order_data)
+        order_item = OrderItem.objects.create(order=order, **validated_data)
+        return order_item

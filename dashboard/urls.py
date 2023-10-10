@@ -5,7 +5,7 @@ from dashboard.views import (ProductDisplayView,  ProductUpdateView, ProductDele
                              OrderItemDispalyView, UpdateOrderItemView,
                              StockDispalyView, StockUpdateView,
                              CustomerView, CustomerDeleteView,CustomerUpdateView,
-                             SupplierDispalyView,
+                             SupplierDispalyView,SupplierUpdateView,
                              CategoryDisplayView, CategoryUpdateView, CategoryDeleteView,
                              TableListView,
                              )
@@ -33,6 +33,7 @@ urlpatterns = [
     path('category/<int:pk>/delete/', CategoryDeleteView.as_view(), name='delete-category'),
 
     path('supplier/list/', SupplierDispalyView.as_view(), name='supplier-list'),
+    path('supplier/<int:pk>/update/', SupplierUpdateView.as_view(), name='supplier-list'),
 
 
     path('customer/list/', CustomerView.as_view(), name='customer-list'),
